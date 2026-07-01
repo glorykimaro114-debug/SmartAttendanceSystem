@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recognition Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2ff;
+            color: #1f2937;
+            padding: 40px;
+        }
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(15,23,42,0.12);
+            padding: 32px;
+        }
+        .header {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom: 28px;
+        }
+        .header a {
+            background:#1d4ed8;
+            color:white;
+            padding:10px 18px;
+            text-decoration:none;
+            border-radius:8px;
+        }
+        table {
+            width:100%;
+            border-collapse:collapse;
+        }
+        th, td {
+            padding:14px 12px;
+            border-bottom:1px solid #e5e7eb;
+            text-align:left;
+        }
+        th {
+            color:#374151;
+            font-weight:700;
+        }
+        .message {
+            margin-bottom:20px;
+            color:#111827;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>Attendance Result</h1>
+                <p class="message">The camera session finished. Here are the recognized attendance records.</p>
+                <p class="message"><strong>Attendance started at:</strong> {{ session_started_at }}</p>
+                {% if message %}
+                    <p class="message" style="color:#b91c1c;">{{ message }}</p>
+                {% endif %}
+            </div>
+            <a href="/dashboard/">Back to Dashboard</a>
+        </div>
+
+        {% if results %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in results %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No new attendance records were captured during this session.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

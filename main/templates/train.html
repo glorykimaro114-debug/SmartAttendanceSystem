@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Train Face Recognition Model</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #1f2937;
+        }
+        .navbar {
+            background: #1e3a8a;
+            color: white;
+            padding: 18px 32px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+        .navbar a {
+            color:white;
+            text-decoration:none;
+            margin-left:20px;
+        }
+        .page-title {
+            padding: 32px 40px 0;
+        }
+        .section {
+            margin: 20px 40px 40px;
+            background:white;
+            border-radius:16px;
+            box-shadow:0 10px 25px rgba(15,23,42,0.08);
+            padding:24px;
+        }
+        .button {
+            background:#1d4ed8;
+            color:white;
+            padding:12px 22px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            text-decoration:none;
+            display:inline-block;
+        }
+        .status {
+            margin-top:16px;
+            padding:16px;
+            border-radius:12px;
+            background:#eef2ff;
+            color:#1e3a8a;
+            max-width:720px;
+        }
+        .status.failure {
+            background:#fee2e2;
+            color:#991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <h2 style="margin:0;">Smart Attendance</h2>
+        </div>
+        <div>
+            <a href="/">Dashboard</a>
+            <a href="/capture/">Capture Face</a>
+            <a href="/recognize/">Start Attendance</a>
+        </div>
+    </div>
+
+    <div class="page-title">
+        <h1>Train Face Recognition Model</h1>
+        <p style="margin-top:8px; color:#475569;">Train the recognition model from the captured face dataset so attendance can be recorded automatically.</p>
+    </div>
+
+    <div class="section">
+        <form method="post">
+            {% csrf_token %}
+            <button class="button" type="submit">Train Model Now</button>
+        </form>
+
+        {% if message %}
+            <div class="status{% if not success %} failure{% endif %}">
+                <strong>{{ message }}</strong>
+            </div>
+        {% endif %}
+
+        {% if trained and not message %}
+            <div class="status">
+                <strong>The model is already trained and ready for recognition.</strong>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

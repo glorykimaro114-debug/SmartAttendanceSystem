@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Capture Faces</title>
+</head>
+<body style="text-align:center; font-family:Arial; margin-top:50px;">
+
+    <h1>Capture Face</h1>
+    <p>Enter your name and then submit to open the camera.</p>
+
+    {% if message %}
+        <p style="color:{% if message_type == 'success' %}green{% else %}red{% endif %};">{{ message }}</p>
+    {% endif %}
+
+    <p>Use the camera window to capture your face. It will stop automatically after 20 good images or when you press 'q'.</p>
+
+    <form method="post" style="display:inline-block; text-align:left; margin-top:20px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="padding:10px 20px;">Start Capture</button>
+    </form>
+
+    <br><br>
+    {% if count is not none %}
+        <p style="font-weight:bold;">Images captured: {{ count }}</p>
+        <p>Camera window opened during capture. Close it or press 'q' to stop capturing.</p>
+    {% endif %}
+
+    <br>
+    <a href="/dashboard/">Back to Dashboard</a>
+</body>
+</html>

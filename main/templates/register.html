@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Student</title>
+</head>
+
+<body style="font-family:Arial; text-align:center; margin-top:50px;">
+
+    <h1>Register Student 👨‍🎓</h1>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            Save Student
+        </button>
+
+    </form>
+
+</body>
+</html>

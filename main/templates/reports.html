@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Reports</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #1f2937;
+        }
+        .navbar {
+            background: #1e3a8a;
+            color: white;
+            padding: 18px 32px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+        .navbar a {
+            color:white;
+            text-decoration:none;
+            margin-left:20px;
+        }
+        .page-title {
+            padding: 32px 40px 0;
+        }
+        .section {
+            margin: 20px 40px 40px;
+            background:white;
+            border-radius:16px;
+            box-shadow:0 10px 25px rgba(15,23,42,0.08);
+            padding:24px;
+        }
+        .button {
+            background:#1d4ed8;
+            color:white;
+            padding:12px 22px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            margin-right:12px;
+            text-decoration:none;
+            display:inline-block;
+        }
+        table {
+            width:100%;
+            border-collapse:collapse;
+            margin-top:16px;
+        }
+        th, td {
+            text-align:left;
+            padding:14px 12px;
+            border-bottom:1px solid #e5e7eb;
+        }
+        th {
+            color:#374151;
+            font-weight:700;
+        }
+        .status-present {
+            color:#15803d;
+            font-weight:700;
+        }
+        .status-absent {
+            color:#b91c1c;
+            font-weight:700;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <h2 style="margin:0;">Smart Attendance</h2>
+        </div>
+        <div>
+            <a href="/">Dashboard</a>
+            <a href="/capture/">Capture Face</a>
+            <a href="/train/">Train Model</a>
+            <a href="/recognize/">Start Attendance</a>
+        </div>
+    </div>
+
+    <div class="page-title">
+        <h1>Attendance Reports</h1>
+        <p style="margin-top:8px; color:#475569;">Angalia rekodi za attendance, bofya Excel au PDF ili kupakua ripoti.</p>
+    </div>
+
+    <div class="section">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+                <strong>Total Records:</strong> {{ total_records }}
+            </div>
+            <div>
+                <a href="/export/excel/" class="button">Export Excel</a>
+                <a href="/export/pdf/" class="button">Export PDF</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Reg Number</th>
+                    <th>Department</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance_records %}
+                <tr>
+                    <td>{{ record.student.name }}</td>
+                    <td>{{ record.student.reg_number }}</td>
+                    <td>{{ record.student.department }}</td>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.time }}</td>
+                    <td class="status-{{ record.status|lower }}">{{ record.status }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">Hakuna rekodi za attendance.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
